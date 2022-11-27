@@ -1,14 +1,14 @@
-/*
+ /*
   Do not change the line below. If you'd like to run code from this file, you may use the `exampleDinosaurData` variable below to gain access to tickets data. This data is pulled from the `data/dinosaurs.js` file.
 
   You may use this data to test your functions. You may assume the shape of the data remains the same but that the values may change.
 
   Keep in mind that your functions must still have and use a parameter for accepting all dinosaurs.
-*/
-const exampleDinosaurData = require("../data/dinosaurs");
-// Do not change the line above.
+ */
+ const exampleDinosaurData = require("../data/dinosaurs");
+ // Do not change the line above.
 
-/**
+ /**
  * getLongestDinosaur()
  * ---------------------
  * Returns an object with the longest dinosaur from the list. Converts from meters to feet.
@@ -22,15 +22,15 @@ const exampleDinosaurData = require("../data/dinosaurs");
  *  getLongestDinosaur(dinosaurs);
  *  //> { Brachiosaurus: 98.43 }
  */
-const getLongestDinosaur = (dinosaurs) => {
+ const getLongestDinosaur = (dinosaurs) => {
   if (!dinosaurs.length) {
     return {}
   }
   let longDino = dinosaurs.reduce((accumulator, currentDino) => accumulator.lengthInMeters < currentDino.lengthInMeters ? currentDino : accumulator)
   return ({[longDino.name]: longDino.lengthInMeters * 3.281})
-}
+ }
 
-/**
+ /**
  * getDinosaurDescription()
  * ---------------------
  * Returns a formatted description of a dinosaur. If the dinosaur cannot be found, returns an error message.
@@ -61,7 +61,7 @@ const getLongestDinosaur = (dinosaurs) => {
     return `${findDino.name} (${findDino.pronunciation})\n${findDino.info} It lived in the ${findDino.period} period, over ${findDino.mya[findDino.mya.length-1]} million years ago.`
  }
 
-/**
+ /**
  * getDinosaursAliveMya()
  * ---------------------
  * Returns an array of dinosaurs who were alive at the given `mya` (i.e. "millions of years ago") value. 
@@ -90,28 +90,30 @@ const getLongestDinosaur = (dinosaurs) => {
  *  getDinosaursAliveMya(dinosaurs, 65, "unknown-key");
  *  //> ["WHQcpcOj0G"]
  */
-const getDinosaursAliveMya = (dinosaurs, mya, key) => {
+ const getDinosaursAliveMya = (dinosaurs, mya, key) => {
   let dinoArray =[]
   dinosaurs.forEach(dino => {
     if(dino.mya.length === 1 && dino.mya[0] === mya || dino.mya[0] - 1 === mya){
-      if(!key){
-        dinoArray.push(dino.dinosaurId)
-      } else {
-        dinoArray.push(dino[key])
-      }
+        dinoArray.push(dino[key]|| dino.dinosaurId)
     } else if(dino.mya.length > 1 && dino.mya[0] >= mya && dino.mya[dino.mya.length-1] <= mya ){
-        if(!key){
-          dinoArray.push(dino.dinosaurId)
-        } else {
-            dinoArray.push(dino[key])
-        }
-      }
+      dinoArray.push(dino[key]|| dino.dinosaurId)
+    }
   })
   return dinoArray
-}
+   
+//   let dinoNEW = dinosaurs.filter(dino => {
+//     if(dino.mya.length === 1 && dino.mya[0] === mya || dino.mya[0] - 1 === mya){
+//        dino[key] || dino.dinosaurId
+//     } else if(dino.mya.length > 1 && dino.mya[0] >= mya && dino.mya[dino.mya.length-1] <= mya ){
+//        dino[key] || dino.dinosaurId
+//     } 
+//   })
+//   console.log(dinoNEW)
+//   return dinoNEW
+ }
     
-module.exports = {
+ module.exports = {
   getLongestDinosaur,
   getDinosaurDescription,
   getDinosaursAliveMya,
-};
+ };
