@@ -68,7 +68,22 @@
       "Kit Hopkins Education Wing"
     ]
  */
-function getConnectedRoomNamesById(rooms, id) {}
+const getConnectedRoomNamesById = (rooms, id) => {
+  let roomFind = rooms.find(room => room.roomId === id)
+  
+  if(!roomFind) { 
+    throw `Room with ID of '${id}' could not be found.` 
+  }
+  
+  let roomName = roomFind.connectsTo.map(room => {
+      let found = rooms.find(originalRoom  => originalRoom.roomId === room)
+      if(!found) { 
+        throw `Room with ID of 'incorrect-id' could not be found.`
+      }
+      return found.name
+  })
+  return roomName
+}
 
 module.exports = {
   getRoomByDinosaurName,
